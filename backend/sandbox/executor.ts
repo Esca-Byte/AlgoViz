@@ -94,23 +94,21 @@ export const executeCode = (userCode: string, language: string = 'javascript'): 
       };
 
       const wrappedCode = `
-        (function() {
-           const __tracer = this.__tracer;
-           const console = { 
-             log: __tracer.log, 
-             error: __tracer.log, 
-             warn: __tracer.log 
-           };
-           
-           try {
-             ${instrumented}
-           } catch (e) {
-             throw e;
-           }
-        }).call({ __tracer: tracer });
+        const __tracer = arguments[0];
+        const console = { 
+          log: __tracer.log, 
+          error: __tracer.log, 
+          warn: __tracer.log 
+        };
+        
+        try {
+          ${instrumented}
+        } catch (e) {
+          throw e;
+        }
       `;
 
-      new Function('tracer', wrappedCode)(tracer);
+      new Function(wrappedCode).call(null, tracer);
 
       resolve(timeline);
 

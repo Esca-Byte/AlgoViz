@@ -471,16 +471,16 @@ export function transpileCppToJs(cppCode: string): string {
     js = js.replace(/(?:std::)?min\s*\(\s*([^,)]+)\s*,\s*([^)]+)\s*\)/g, 'Math.min($1, $2)');
     js = js.replace(/(?:std::)?max\s*\(\s*([^,)]+)\s*,\s*([^)]+)\s*\)/g, 'Math.max($1, $2)');
 
-    // Math functions
-    js = js.replace(/\babs\s*\(/g, 'Math.abs(');
-    js = js.replace(/\bpow\s*\(/g, 'Math.pow(');
-    js = js.replace(/\bsqrt\s*\(/g, 'Math.sqrt(');
-    js = js.replace(/\bceil\s*\(/g, 'Math.ceil(');
-    js = js.replace(/\bfloor\s*\(/g, 'Math.floor(');
-    js = js.replace(/\blog\s*\(/g, 'Math.log(');
-    js = js.replace(/\blog2\s*\(/g, 'Math.log2(');
-    js = js.replace(/\blog10\s*\(/g, 'Math.log10(');
-    js = js.replace(/\bround\s*\(/g, 'Math.round(');
+    // Math functions — (?<!\.) prevents matching property accesses like console.log
+    js = js.replace(/(?<!\.)(?:\b)abs\s*\(/g, 'Math.abs(');
+    js = js.replace(/(?<!\.)(?:\b)pow\s*\(/g, 'Math.pow(');
+    js = js.replace(/(?<!\.)(?:\b)sqrt\s*\(/g, 'Math.sqrt(');
+    js = js.replace(/(?<!\.)(?:\b)ceil\s*\(/g, 'Math.ceil(');
+    js = js.replace(/(?<!\.)(?:\b)floor\s*\(/g, 'Math.floor(');
+    js = js.replace(/(?<!\.)(?:\b)log\s*\(/g, 'Math.log(');
+    js = js.replace(/(?<!\.)(?:\b)log2\s*\(/g, 'Math.log2(');
+    js = js.replace(/(?<!\.)(?:\b)log10\s*\(/g, 'Math.log10(');
+    js = js.replace(/(?<!\.)(?:\b)round\s*\(/g, 'Math.round(');
 
     // Constants
     js = js.replace(/\bINT_MAX\b/g, 'Number.MAX_SAFE_INTEGER');
