@@ -1,0 +1,5 @@
+{
+  "name": "AlgoViz",
+  "description": "A production-grade JavaScript code execution visualizer for educational purposes. Step through code, watch variables change, and understand control flow.",
+  "requestFramePermissions": []
+}
