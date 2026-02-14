@@ -76,6 +76,25 @@ int main() {
 }
 `;
 
+const PYTHON_DEFAULT_CODE = `# Welcome to AlgoViz!
+# Edit this code and click the Play button below.
+
+sum_val = 0
+limit = 5
+
+def add_to_sum(val):
+    multiplier = 2
+    return val * multiplier
+
+for i in range(1, limit + 1):
+    print("Processing item", i)
+    if i % 2 == 0:
+        sum_val += add_to_sum(i)
+    else:
+        sum_val += i
+
+print("Final Sum:", sum_val)
+`;
 
 const App: React.FC = () => {
     const [page, setPage] = useState<'home' | 'editor'>('home');
@@ -93,7 +112,7 @@ const App: React.FC = () => {
     const timerRef = useRef<number | null>(null);
 
     // Derived Theme Color
-    const themeColor = language === 'c++' ? 'blue' : 'saffron';
+    const themeColor = language === 'c++' ? 'blue' : (language === 'python' ? 'green' : 'saffron');
 
     // Apply Theme class to Body for Tailwind Dark Mode
     useEffect(() => {
@@ -154,6 +173,8 @@ const App: React.FC = () => {
         setLanguage(lang);
         if (lang === 'c++') {
             setCode(CPP_DEFAULT_CODE);
+        } else if (lang === 'python') {
+            setCode(PYTHON_DEFAULT_CODE);
         } else {
             setCode(JS_DEFAULT_CODE);
         }
@@ -191,18 +212,18 @@ const App: React.FC = () => {
         );
     }
 
-    const langLabel = language === 'javascript' ? 'JavaScript (ES6)' : 'C++ (Beta)';
+    const langLabel = language === 'javascript' ? 'JavaScript (ES6)' : (language === 'python' ? 'Python (Beta)' : 'C++ (Beta)');
 
     // Theme Helper Classes
-    const headerClass = themeColor === 'saffron' ? 'bg-saffron-500' : 'bg-blue-600';
-    const tagClass = themeColor === 'saffron' ? 'bg-saffron-600/50' : 'bg-blue-800/50';
-    const iconTextClass = themeColor === 'saffron' ? 'text-saffron-500' : 'text-blue-500';
+    const headerClass = themeColor === 'saffron' ? 'bg-saffron-500' : (themeColor === 'green' ? 'bg-green-600' : 'bg-blue-600');
+    const tagClass = themeColor === 'saffron' ? 'bg-saffron-600/50' : (themeColor === 'green' ? 'bg-green-800/50' : 'bg-blue-800/50');
+    const iconTextClass = themeColor === 'saffron' ? 'text-saffron-500' : (themeColor === 'green' ? 'text-green-500' : 'text-blue-500');
     const runBtnClass = themeColor === 'saffron'
         ? 'bg-saffron-500 hover:bg-saffron-600 shadow-saffron-500/20'
-        : 'bg-blue-500 hover:bg-blue-600 shadow-blue-500/20';
-    const tabActiveText = themeColor === 'saffron' ? 'text-saffron-600 dark:text-saffron-400' : 'text-blue-600 dark:text-blue-400';
-    const tabActiveBorder = themeColor === 'saffron' ? 'border-saffron-500' : 'border-blue-500';
-    const tabActiveBg = themeColor === 'saffron' ? 'bg-saffron-50/50' : 'bg-blue-50/50';
+        : (themeColor === 'green' ? 'bg-green-500 hover:bg-green-600 shadow-green-500/20' : 'bg-blue-500 hover:bg-blue-600 shadow-blue-500/20');
+    const tabActiveText = themeColor === 'saffron' ? 'text-saffron-600 dark:text-saffron-400' : (themeColor === 'green' ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400');
+    const tabActiveBorder = themeColor === 'saffron' ? 'border-saffron-500' : (themeColor === 'green' ? 'border-green-500' : 'border-blue-500');
+    const tabActiveBg = themeColor === 'saffron' ? 'bg-saffron-50/50' : (themeColor === 'green' ? 'bg-green-50/50' : 'bg-blue-50/50');
 
     return (
         <div className="flex flex-col h-screen w-screen bg-gray-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 overflow-hidden transition-colors duration-300">
