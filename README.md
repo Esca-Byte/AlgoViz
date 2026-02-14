@@ -6,8 +6,11 @@
 
 **Step through your code line-by-line. Watch variables update in real-time. Understand the call stack.**
 
+
 [![Made by Somyajeet](https://img.shields.io/badge/Made%20by-Somyajeet-ff7316?style=for-the-badge)](https://github.com/ssgamingop)
+[![Forked by Escabyte](https://img.shields.io/badge/Forked%20%26%20Python%20by-Escabyte-blue?style=for-the-badge)](.)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=for-the-badge&logo=javascript&logoColor=black)](.)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=for-the-badge&logo=python&logoColor=white)](.)
 [![C++](https://img.shields.io/badge/C++-Beta-00599c?style=for-the-badge&logo=cplusplus&logoColor=white)](.)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=black)](.)
 
@@ -175,6 +178,7 @@ npm run preview
 | **Framer Motion** | Smooth animations |
 | **Lucide React** | Icons |
 | **Tailwind CSS** | Styling (via CDN) |
+| **Python** | Logic & Transpiler (Added by Fork) |
 
 ---
 
@@ -207,7 +211,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-**Built with ❤️ by [Somyajeet](https://github.com/ssgamingop)**
+**Built with ❤️ by [Somyajeet](https://github.com/ssgamingop)** <br/>
+**Forked & Python added by [escabyte](.)**
 
 *© 2026 AlgoViz. Built for Educators.*
 
