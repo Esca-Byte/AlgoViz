@@ -1,5 +1,6 @@
 import { instrumentCode } from '../tracer/instrumenter';
 import { transpileCppToJs } from './cppTranspiler';
+import { transpilePythonToJs } from './pythonTranspiler';
 import { Timeline, ExecutionStep, ConsoleLog } from '../../types';
 
 export const executeCode = (userCode: string, language: string = 'javascript'): Promise<Timeline> => {
@@ -11,12 +12,18 @@ export const executeCode = (userCode: string, language: string = 'javascript'): 
     try {
       let codeToInstrument = userCode;
 
-      // Transpile if C++
+      // Transpile if C++ or Python
       if (language === 'c++' || language === 'cpp') {
         try {
           codeToInstrument = transpileCppToJs(userCode);
         } catch (transpileError: any) {
-          throw new Error(`Transpilation Failed: ${transpileError.message}`);
+          throw new Error(`Transpilation Failed: ${transpileError.message} `);
+        }
+      } else if (language === 'python' || language === 'py') {
+        try {
+          codeToInstrument = transpilePythonToJs(userCode);
+        } catch (transpileError: any) {
+          throw new Error(`Transpilation Failed: ${transpileError.message} `);
         }
       }
 
@@ -88,25 +95,25 @@ export const executeCode = (userCode: string, language: string = 'javascript'): 
           // Return pre-seeded sample values for cin visualization
           const val = tracer._inputValues[tracer._inputIndex % tracer._inputValues.length];
           tracer._inputIndex++;
-          currentLogs.push({ type: 'log', message: `[input] → ${val}` });
+          currentLogs.push({ type: 'log', message: `[input] → ${val} ` });
           return val;
         }
       };
 
       const wrappedCode = `
-        const __tracer = arguments[0];
-        const console = { 
-          log: __tracer.log, 
-          error: __tracer.log, 
-          warn: __tracer.log 
-        };
-        
-        try {
+const __tracer = arguments[0];
+const console = {
+  log: __tracer.log,
+  error: __tracer.log,
+  warn: __tracer.log
+};
+
+try {
           ${instrumented}
-        } catch (e) {
-          throw e;
-        }
-      `;
+} catch (e) {
+  throw e;
+}
+`;
 
       new Function(wrappedCode).call(null, tracer);
 
@@ -124,7 +131,7 @@ export const executeCode = (userCode: string, language: string = 'javascript'): 
           callStack: timeline.length > 0 ? timeline[timeline.length - 1].callStack : ['main'],
           consoleOutput: [
             ...currentLogs,
-            { type: 'error', message: `Runtime Error: ${e.message}` }
+            { type: 'error', message: `Runtime Error: ${e.message} ` }
           ],
           isError: true,
           errorMessage: e.message
